@@ -1,6 +1,7 @@
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
+
 public class TrainConsistManagementApp {
 
     static class Bogie {
@@ -12,7 +13,6 @@ public class TrainConsistManagementApp {
             this.capacity = capacity;
         }
 
-        @Override
         public String toString() {
             return name + " (" + capacity + ")";
         }
@@ -21,7 +21,7 @@ public class TrainConsistManagementApp {
     public static void main(String[] args) {
 
         System.out.println("==================================");
-        System.out.println("UC7 - Sort Bogies by Capacity");
+        System.out.println("UC8 - Filter Passenger Bogies Using Streams");
         System.out.println("==================================");
 
         List<Bogie> bogies = new ArrayList<>();
@@ -30,10 +30,12 @@ public class TrainConsistManagementApp {
         bogies.add(new Bogie("AC Chair", 54));
         bogies.add(new Bogie("First Class", 24));
 
-        System.out.println("Before sorting: " + bogies);
+        System.out.println("Original bogies: " + bogies);
 
-        bogies.sort(Comparator.comparingInt(b -> b.capacity));
+        List<Bogie> filteredBogies = bogies.stream()
+                .filter(b -> b.capacity > 60)
+                .collect(Collectors.toList());
 
-        System.out.println("After sorting (by capacity): " + bogies);
+        System.out.println("Filtered bogies (capacity > 60): " + filteredBogies);
     }
 }
